@@ -154,6 +154,10 @@ GEM
       ffi (>= 0.5.0)
     rdoc (3.12.2)
       json (~> 1.4)
+    roo (1.12.2)
+      nokogiri
+      rubyzip
+      spreadsheet (> 0.6.4)
     rspec (2.13.0)
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
@@ -169,6 +173,7 @@ GEM
       rspec-core (~> 2.13.0)
       rspec-expectations (~> 2.13.0)
       rspec-mocks (~> 2.13.0)
+    ruby-ole (1.2.11.7)
     rubyzip (0.9.9)
     sass (3.2.12)
     sass-rails (4.0.0)
@@ -188,6 +193,8 @@ GEM
     spork-rails (4.0.0)
       rails (>= 3.0.0, < 5)
       spork (>= 1.0rc0)
+    spreadsheet (0.9.1)
+      ruby-ole (>= 1.0)
     sprockets (2.10.0)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -240,6 +247,7 @@ DEPENDENCIES
   pg (= 0.15.1)
   rails (= 4.0.0)
   rails_12factor (= 0.0.2)
+  roo
   rspec-rails (= 2.13.1)
   sass-rails (= 4.0.0)
   sdoc (= 0.3.20)
