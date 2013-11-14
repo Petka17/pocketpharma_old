@@ -1,0 +1,19 @@
+<h1>Drugstores</h1>
+
+<%= form_tag import_drugstores_path do %>
+  <%= submit_tag "Import" %>
+<% end %>
+<br>
+<table>
+	<% @drugstores.each do |ds| %>
+	<tr>
+		<td><%= ds.external_id %></td>
+		<td><%= link_to ds.name, drugstore_path(ds) %></td>
+		<td><%= ds.address %></td>
+		<td><%= ds.phone %></td>
+		<td><%= ds.working_hours %></td>
+		<td><%= ds.data_last_update %></td>
+	</tr>
+	<% end %>
+</table>
+

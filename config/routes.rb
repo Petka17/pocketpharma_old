@@ -6,6 +6,10 @@ Pocketpharma::Application.routes.draw do
 		collection { post :import }
 	end
 
+	resources :drugstores do
+		collection { post :import }
+	end
+
 	match '/rls_product_list', to: 'rls_products#index', via: 'get'
 
 end

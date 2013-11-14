@@ -6,6 +6,6 @@ class RlsProductsController < ApplicationController
 
   def import
   	RlsProduct.import(params[:file])
-		redirect_to root_path
+		redirect_to rls_products_path
   end
 end

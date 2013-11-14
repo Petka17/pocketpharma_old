@@ -1,0 +1,2 @@
+module DsProductHelper
+end
