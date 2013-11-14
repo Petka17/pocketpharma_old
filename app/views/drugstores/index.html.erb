@@ -1,8 +1,17 @@
 <h1>Drugstores</h1>
 
-<%= form_tag import_drugstores_path do %>
-  <%= submit_tag "Import" %>
+<%= form_for(:drugstore, url: import_drugstores_path) do |f| %> 
+	
+	<%= f.label :from %>
+	<%= f.number_field :from %> 
+	
+	<%= f.label :to %>
+	<%= f.number_field :to %>
+	
+	<%= f.submit "Import" %>
+
 <% end %>
+
 <br>
 <table>
 	<% @drugstores.each do |ds| %>

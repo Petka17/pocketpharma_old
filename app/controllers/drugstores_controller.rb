@@ -10,7 +10,10 @@ class DrugstoresController < ApplicationController
   end
 
 	def import
-		(1..10).each {|i| get_drugstore_data(i)}
+		# (1..10).each {|i| get_drugstore_data(i)}
+
+		(params[:drugstore][:from]..params[:drugstore][:to]).each { |i| get_drugstore_data(i) }
+
 		redirect_to drugstores_path
 	end
 
