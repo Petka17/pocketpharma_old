@@ -10,7 +10,7 @@ class DrugstoresController < ApplicationController
   end
 
 	def import
-		(72..72).each {|i| get_drugstore_data(i)}
+		(1..10).each {|i| get_drugstore_data(i)}
 		redirect_to drugstores_path
 	end
 
