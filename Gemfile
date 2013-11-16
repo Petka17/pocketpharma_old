@@ -12,10 +12,17 @@ gem 'bootstrap-will_paginate', '0.0.9'
 gem 'roo'
 gem 'nokogiri'
 
+gem 'sidekiq'
+gem 'sinatra', require: false
+gem 'slim'
+
 gem 'newrelic_rpm'
 
+gem 'unicorn'
+
+gem 'pg', '0.15.1'
+
 group :development, :test do
-	gem 'sqlite3', '1.3.8'
 	gem 'rspec-rails', '2.13.1'
 
 	# The following optional lines are part of the advanced setup.
@@ -50,6 +57,5 @@ group :doc do
 end
 
 group :production do
-	gem 'pg', '0.15.1'
 	gem 'rails_12factor', '0.0.2'
 end

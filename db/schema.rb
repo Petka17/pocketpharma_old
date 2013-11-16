@@ -13,6 +13,9 @@
 
 ActiveRecord::Schema.define(version: 20131113203547) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "drug_stores", force: true do |t|
     t.integer  "external_id"
     t.string   "name"
@@ -25,7 +28,7 @@ ActiveRecord::Schema.define(version: 20131113203547) do
     t.datetime "data_last_update"
   end
 
-  add_index "drug_stores", ["external_id"], name: "index_drug_stores_on_external_id"
+  add_index "drug_stores", ["external_id"], name: "index_drug_stores_on_external_id", using: :btree
 
   create_table "ds_products", force: true do |t|
     t.integer  "external_id"
@@ -37,9 +40,9 @@ ActiveRecord::Schema.define(version: 20131113203547) do
     t.datetime "updated_at"
   end
 
-  add_index "ds_products", ["ean"], name: "index_ds_products_on_ean"
-  add_index "ds_products", ["external_id"], name: "index_ds_products_on_external_id"
-  add_index "ds_products", ["rls_code"], name: "index_ds_products_on_rls_code"
+  add_index "ds_products", ["ean"], name: "index_ds_products_on_ean", using: :btree
+  add_index "ds_products", ["external_id"], name: "index_ds_products_on_external_id", using: :btree
+  add_index "ds_products", ["rls_code"], name: "index_ds_products_on_rls_code", using: :btree
 
   create_table "product_prices", force: true do |t|
     t.integer  "product_id"
@@ -54,10 +57,10 @@ ActiveRecord::Schema.define(version: 20131113203547) do
     t.boolean  "delete_flag",  default: false
   end
 
-  add_index "product_prices", ["ean"], name: "index_product_prices_on_ean"
-  add_index "product_prices", ["external_id"], name: "index_product_prices_on_external_id"
-  add_index "product_prices", ["full_name"], name: "index_product_prices_on_full_name"
-  add_index "product_prices", ["product_id", "drugstore_id"], name: "index_product_prices_on_product_id_and_drugstore_id", unique: true
+  add_index "product_prices", ["ean"], name: "index_product_prices_on_ean", using: :btree
+  add_index "product_prices", ["external_id"], name: "index_product_prices_on_external_id", using: :btree
+  add_index "product_prices", ["full_name"], name: "index_product_prices_on_full_name", using: :btree
+  add_index "product_prices", ["product_id", "drugstore_id"], name: "index_product_prices_on_product_id_and_drugstore_id", unique: true, using: :btree
 
   create_table "rls_products", force: true do |t|
     t.integer  "code"
@@ -75,6 +78,6 @@ ActiveRecord::Schema.define(version: 20131113203547) do
     t.datetime "updated_at"
   end
 
-  add_index "rls_products", ["code"], name: "index_rls_products_on_code", unique: true
+  add_index "rls_products", ["code"], name: "index_rls_products_on_code", unique: true, using: :btree
 
 end

@@ -10,10 +10,8 @@ class DrugstoresController < ApplicationController
   end
 
 	def import
-		# (1..10).each {|i| get_drugstore_data(i)}
-
-		(params[:drugstore][:from]..params[:drugstore][:to]).each { |i| get_drugstore_data(i) }
-
+		# (params[:drugstore][:from]..params[:drugstore][:to]).each { |i| get_drugstore_data(i) }
+		(params[:drugstore][:from]..params[:drugstore][:to]).each { |i| MedluxWorker.perform_async(i) }
 		redirect_to drugstores_path
 	end
 
@@ -57,8 +55,8 @@ class DrugstoresController < ApplicationController
 
 					product_price.external_id = product_id
 					product_price.full_name 	= row.css('td')[0].content
-					product_price.price = row.css('td')[1].content.gsub(/[руб.]/, '')
-					product_price.amount = row.css('td')[2].content.gsub(/[уп.]/, '')
+					product_price.price 			= row.css('td')[1].content.gsub(/[руб.]/, '')
+					product_price.amount 			= row.css('td')[2].content.gsub(/[уп.]/, '')
 					product_price.delete_flag = false
 
 					product_price.save

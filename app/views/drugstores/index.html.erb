@@ -18,6 +18,7 @@
 	<tr>
 		<td><%= ds.external_id %></td>
 		<td><%= link_to ds.name, drugstore_path(ds) %></td>
+		<td><%= ds.product_price.count %></td>
 		<td><%= ds.address %></td>
 		<td><%= ds.phone %></td>
 		<td><%= ds.working_hours %></td>

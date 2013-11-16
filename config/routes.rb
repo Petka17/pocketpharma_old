@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Pocketpharma::Application.routes.draw do
 
   root 'static_pages#home'
@@ -12,4 +14,6 @@ Pocketpharma::Application.routes.draw do
 
 	match '/rls_product_list', to: 'rls_products#index', via: 'get'
 
+	mount Sidekiq::Web, at: '/sidekiq'
+	
 end
