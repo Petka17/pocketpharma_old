@@ -12,7 +12,9 @@ Pocketpharma::Application.routes.draw do
 		collection { post :import }
 	end
 
-	match '/rls_product_list', to: 'rls_products#index', via: 'get'
+	resources :ds_product do
+		collection { post :update_db }
+	end
 
 	mount Sidekiq::Web, at: '/sidekiq'
 	

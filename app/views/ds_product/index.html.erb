@@ -1,3 +1,17 @@
-<h1>MedLux</h1>
+<h1>Ассортимент аптек</h1>
 
-<%= @string %>
+<%= form_tag update_db_ds_product_index_path do %>
+  <%= submit_tag "Update" %>
+<% end %>
+
+<br>
+<table>
+	<% @ds_products.each do |dsp| %>
+		<tr>
+			<td><%= dsp.id %></td>
+			<td><%= dsp.external_id %></td>
+			<td><%= dsp.full_name %></td>
+			<td><%= dsp.product_price.count %></td>
+		</tr>
+	<% end %>
+</table>
