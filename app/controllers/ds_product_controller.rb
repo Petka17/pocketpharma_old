@@ -5,9 +5,8 @@ class DsProductController < ApplicationController
 	end
 
 	def update_db
-		ProductPrice.where(product_id: nil).each do |pp|
-			pp.save
-		end
+		DsProductWorker.perform_async
+
 		redirect_to ds_product_index_path
 	end
 
