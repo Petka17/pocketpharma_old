@@ -3,6 +3,7 @@
 		<h1>Список продуктов из РЛС</h1>
 	</div>
 	<div class="col-md-6">
+		<span>Количество продуктов <%= @rls_products.count %></span>
 		<%= form_tag import_rls_products_path, multipart: true, class: "form-inline center-block" do %>
 			<div class="form-group">
 				<%= file_field_tag :file %>
@@ -19,7 +20,7 @@
 <div class="table-responsive">
 	<table class="table table-condensed table-hover">
 		<tr>
-			<th>РЛС Код</th>
+			<th>Код РЛС</th>
 			<th>Название группы</th>
 			<th>Категория</th>
 			<th>Тип</th>

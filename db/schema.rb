@@ -11,10 +11,29 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131113203547) do
+ActiveRecord::Schema.define(version: 20131126195320) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "companies", force: true do |t|
+    t.string   "name"
+    t.integer  "country_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "counties", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "doses", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "drug_stores", force: true do |t|
     t.integer  "external_id"
@@ -44,6 +63,38 @@ ActiveRecord::Schema.define(version: 20131113203547) do
   add_index "ds_products", ["external_id"], name: "index_ds_products_on_external_id", using: :btree
   add_index "ds_products", ["rls_code"], name: "index_ds_products_on_rls_code", using: :btree
 
+  create_table "forms", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "group_types", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "inns", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "packs", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "product_groups", force: true do |t|
+    t.string   "name"
+    t.string   "category"
+    t.integer  "type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "product_prices", force: true do |t|
     t.integer  "product_id"
     t.integer  "drugstore_id"
@@ -62,6 +113,27 @@ ActiveRecord::Schema.define(version: 20131113203547) do
   add_index "product_prices", ["full_name"], name: "index_product_prices_on_full_name", using: :btree
   add_index "product_prices", ["product_id", "drugstore_id"], name: "index_product_prices_on_product_id_and_drugstore_id", unique: true, using: :btree
 
+  create_table "products", force: true do |t|
+    t.integer  "rls_code"
+    t.integer  "product_group_id"
+    t.integer  "inn_id"
+    t.integer  "form_id"
+    t.integer  "dose_id"
+    t.integer  "pack_id"
+    t.integer  "company_id"
+    t.string   "ean"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["company_id"], name: "index_products_on_company_id", using: :btree
+  add_index "products", ["dose_id"], name: "index_products_on_dose_id", using: :btree
+  add_index "products", ["ean"], name: "index_products_on_ean", using: :btree
+  add_index "products", ["form_id"], name: "index_products_on_form_id", using: :btree
+  add_index "products", ["inn_id"], name: "index_products_on_inn_id", using: :btree
+  add_index "products", ["pack_id"], name: "index_products_on_pack_id", using: :btree
+  add_index "products", ["product_group_id"], name: "index_products_on_product_group_id", using: :btree
+
   create_table "rls_products", force: true do |t|
     t.integer  "code"
     t.string   "name"
@@ -72,7 +144,7 @@ ActiveRecord::Schema.define(version: 20131113203547) do
     t.string   "pack"
     t.string   "company"
     t.string   "country"
-    t.string   "inn"
+    t.text     "inn"
     t.string   "ean"
     t.datetime "created_at"
     t.datetime "updated_at"

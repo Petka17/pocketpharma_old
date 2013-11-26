@@ -6,6 +6,7 @@ class RlsProductsController < ApplicationController
 
   def import
   	RlsProduct.import(params[:file])
+  	# MedluxWorker.perform_async(params[:file])
 		redirect_to rls_products_path
   end
 end

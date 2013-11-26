@@ -10,8 +10,9 @@ class RlsProduct < ActiveRecord::Base
 	    
 	    row = Hash[[header, spreadsheet.row(i)].transpose]
 	    
-	    product = RlsProduct.find_by_code(row["code"]) || new
-
+	    # product = RlsProduct.find_by_code(row["code"]) || new
+	    product = RlsProduct.where(code: row["code"]).first_or_initialize
+	    
 	    product.code 				 = row["code"]
 			product.name 				 = row["name"]
 			product.category 		 = row["category"]
