@@ -1,7 +1,7 @@
 class DsProductController < ApplicationController
 
 	def index
-		@ds_products = DsProduct.all
+		@ds_products = DsProduct.paginate(page: params[:page])
 	end
 
 	def update_db

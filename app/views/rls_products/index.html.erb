@@ -1,41 +1,52 @@
-<h1>Список продуктов из РЛС</h1>
-
-<h2>Import RLS Product</h2>
-
-<%= form_tag import_rls_products_path, multipart: true do %>
-	<%= file_field_tag :file %>
-  <%= submit_tag "Import" %>
-<% end %>
-
-<table>
-	<tr>
-		<th>РЛС Код</th>
-		<th>Название группы</th>
-		<th>Категория</th>
-		<th>Тип</th>
-		<th>Форма</th>
-		<th>Дозировка</th>
-		<th>Фасовка</th>
-		<th>Производитель</th>
-		<th>Страна</th>
-		<th>МНН</th>
-		<th>Штрих-код</th>
-	</tr>
+<div class="row">
+	<div class="col-md-6">
+		<h1>Список продуктов из РЛС</h1>
+	</div>
+	<div class="col-md-6">
+		<%= form_tag import_rls_products_path, multipart: true, class: "form-inline center-block" do %>
+			<div class="form-group">
+				<%= file_field_tag :file %>
+			</div>
+			<div class="form-group">
+		  	<%= submit_tag "Import" %>
+		  </div>
+		<% end %>
+	</div>
+</div>
 	
-	<% @rls_products.each do |product| %>
-		<tr>
-			<td><%= product.code %></td>
-			<td><%= product.name %></td>
-			<td><%= product.category %></td>
-			<td><%= product.product_type %></td>
-			<td><%= product.product_form %></td>
-			<td><%= product.dose %></td>
-			<td><%= product.pack %></td>
-			<td><%= product.company %></td>
-			<td><%= product.country %></td>
-			<td><%= product.inn %></td>
-			<td><%= product.ean %></td>
-		</tr>
-	<% end %>
+<%= will_paginate @rls_products %>
 
-</table>
+<div class="table-responsive">
+	<table class="table table-condensed table-hover">
+		<tr>
+			<th>РЛС Код</th>
+			<th>Название группы</th>
+			<th>Категория</th>
+			<th>Тип</th>
+			<th>Форма</th>
+			<th>Дозировка</th>
+			<th>Фасовка</th>
+			<th>Производитель</th>
+			<th>Страна</th>
+			<th>МНН</th>
+			<th>Штрих-код</th>
+		</tr>
+		
+		<% @rls_products.each do |product| %>
+			<tr>
+				<td><%= product.code %></td>
+				<td><%= product.name %></td>
+				<td><%= product.category %></td>
+				<td><%= product.product_type %></td>
+				<td><%= product.product_form %></td>
+				<td><%= product.dose %></td>
+				<td><%= product.pack %></td>
+				<td><%= product.company %></td>
+				<td><%= product.country %></td>
+				<td><%= product.inn %></td>
+				<td><%= product.ean %></td>
+			</tr>
+		<% end %>
+
+	</table>
+</div>
