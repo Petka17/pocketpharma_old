@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131126195320) do
+ActiveRecord::Schema.define(version: 20131127180444) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,17 +23,23 @@ ActiveRecord::Schema.define(version: 20131126195320) do
     t.datetime "updated_at"
   end
 
-  create_table "counties", force: true do |t|
+  add_index "companies", ["name", "country_id"], name: "index_companies_on_name_and_country_id", unique: true, using: :btree
+
+  create_table "countries", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
 
   create_table "doses", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "doses", ["name"], name: "index_doses_on_name", unique: true, using: :btree
 
   create_table "drug_stores", force: true do |t|
     t.integer  "external_id"
@@ -69,23 +75,31 @@ ActiveRecord::Schema.define(version: 20131126195320) do
     t.datetime "updated_at"
   end
 
+  add_index "forms", ["name"], name: "index_forms_on_name", unique: true, using: :btree
+
   create_table "group_types", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "group_types", ["name"], name: "index_group_types_on_name", unique: true, using: :btree
+
   create_table "inns", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "inns", ["name"], name: "index_inns_on_name", unique: true, using: :btree
 
   create_table "packs", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "packs", ["name"], name: "index_packs_on_name", unique: true, using: :btree
 
   create_table "product_groups", force: true do |t|
     t.string   "name"
@@ -94,6 +108,8 @@ ActiveRecord::Schema.define(version: 20131126195320) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "product_groups", ["name", "category", "type_id"], name: "index_product_groups_on_name_and_category_and_type_id", unique: true, using: :btree
 
   create_table "product_prices", force: true do |t|
     t.integer  "product_id"

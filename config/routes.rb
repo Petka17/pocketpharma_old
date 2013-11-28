@@ -16,7 +16,7 @@ Pocketpharma::Application.routes.draw do
 		collection { post :update_db }
 	end
 
-	resources :product do
+	resources :products do
 		collection { post :update_db }
 	end
 

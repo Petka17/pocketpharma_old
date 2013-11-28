@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="col-md-6">
+
+		<h1>Список продуктов</h1>
+	</div>
+	<div class="col-md-6">
+		<span>Количество продуктов <%= @products.count %></span>
+		<%= form_tag update_db_products_path, class: "form-inline" do %>
+		  <%= submit_tag "Обновить" %>
+		<% end %>
+	</div>
+</div>
+
+<%= will_paginate @products %>
+
+<div class="table-responsive">
+	<table class="table table-condensed table-hover">
+		<tr>
+			<th>Код РЛС</th>
+			<th>Название группы</th>
+			<th>Категория</th>
+			<th>Тип</th>
+			<th>Форма</th>
+			<th>Дозировка</th>
+			<th>Фасовка</th>
+			<th>Производитель</th>
+			<th>Страна</th>
+			<th>МНН</th>
+			<th>Штрих-код</th>
+		</tr>
+		
+		<% @products.each do |p| %>
+			<tr>
+				<td><%= p.rls_code %></td>				
+				<td><%= p.product_group.name unless p.product_group.nil? %></td>
+				<td><%= p.product_group.category unless p.product_group.nil? %></td>
+				<td><%= p.product_group.group_type.name unless p.product_group.nil? || p.product_group.group_type.nil? %></td>
+				<td><%= p.form.name unless p.form.nil? %></td>
+				<td><%= p.dose.name unless p.dose.nil? %></td>
+				<td><%= p.pack.name unless p.pack.nil? %></td>
+				<td><%= p.company.name unless p.company.nil? %></td>
+				<td><%= p.company.country.name unless p.company.nil? || p.company.country.nil? %></td>
+				<td><%= p.inn.name unless p.inn.nil? %></td>
+				<td><%= p.ean %></td>
+			</tr>
+		<% end %>
+
+	</table>
+</div>

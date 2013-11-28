@@ -6,7 +6,6 @@ class DsProductController < ApplicationController
 
 	def update_db
 		DsProductWorker.perform_async
-
 		redirect_to ds_product_index_path
 	end
 
