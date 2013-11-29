@@ -5,7 +5,10 @@ Pocketpharma::Application.routes.draw do
   root 'static_pages#home'
 
 	resources :rls_products do
-		collection { post :import }
+		collection do 
+			post :import
+			post :clear_db
+		end
 	end
 
 	resources :drugstores do

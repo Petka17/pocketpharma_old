@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131127180444) do
+ActiveRecord::Schema.define(version: 20131129112104) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -78,7 +78,7 @@ ActiveRecord::Schema.define(version: 20131127180444) do
   add_index "forms", ["name"], name: "index_forms_on_name", unique: true, using: :btree
 
   create_table "group_types", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -102,7 +102,7 @@ ActiveRecord::Schema.define(version: 20131127180444) do
   add_index "packs", ["name"], name: "index_packs_on_name", unique: true, using: :btree
 
   create_table "product_groups", force: true do |t|
-    t.string   "name"
+    t.text     "name"
     t.string   "category"
     t.integer  "type_id"
     t.datetime "created_at"
@@ -152,9 +152,9 @@ ActiveRecord::Schema.define(version: 20131127180444) do
 
   create_table "rls_products", force: true do |t|
     t.integer  "code"
-    t.string   "name"
+    t.text     "name"
     t.string   "category"
-    t.string   "product_type"
+    t.text     "product_type"
     t.string   "product_form"
     t.string   "dose"
     t.string   "pack"

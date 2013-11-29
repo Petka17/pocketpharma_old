@@ -1,34 +1,23 @@
 class RlsProduct < ActiveRecord::Base
 
-	def self.import(file)
+	def self.mass_insert(file)
 
 	  spreadsheet = Roo::Excel.new(file.path, nil, :ignore)
 
 	  header = spreadsheet.row(1)
 
-	  (2..spreadsheet.last_row).each do |i|
-	    
+		inserts = []
+
+	  (2..spreadsheet.last_row).each do |i|	    
 	    row = Hash[[header, spreadsheet.row(i)].transpose]
 	    
-	    # product = RlsProduct.find_by_code(row["code"]) || new
-	    product = RlsProduct.where(code: row["code"]).first_or_initialize
-	    
-	    product.code 				 = row["code"]
-			product.name 				 = row["name"]
-			product.category 		 = row["category"]
-			product.product_type = row["type"]
-			product.product_form = row["form"]
-			product.dose 				 = row["dose"]
-			product.pack 				 = row["pack"]
-			product.company 		 = row["company"]
-			product.country 		 = row["country"]
-			product.inn 				 = row["inn"]
-			product.ean 				 = row["ean"]
-
-	    product.save!
-
+	    inserts.push "(#{row["code"]},\'#{row["name"]}\',\'#{row["category"]}\',\'#{row["type"]}\',\'#{row["form"]}\',\'#{row["dose"]}\',\'#{row["pack"]}\',\'#{row["company"]}\',\'#{row["country"]}\',\'#{row["inn"]}\',\'#{row["ean"]}\')"
 	  end
 
+		sql = "INSERT INTO rls_products (code, name, category, product_type, product_form, dose, pack, company, country, inn, ean) VALUES #{inserts.join(", ")}"
+
+    ActiveRecord::Base.connection.execute sql
+		
 	end
 
 end
