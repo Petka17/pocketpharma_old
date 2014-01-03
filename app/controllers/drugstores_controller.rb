@@ -11,13 +11,8 @@ class DrugstoresController < ApplicationController
 
 	def import
 	 	MedluxWorker.perform_async(params[:drugstore][:from], params[:drugstore][:to])
-	 	# (params[:drugstore][:from]..params[:drugstore][:to]).each { |i| MedluxWorker.perform_async(i) }
-	 	# (params[:drugstore][:from]..params[:drugstore][:to]).each { |i| get_proucts(i) }
 		redirect_to drugstores_path
 	end
-	
-	def get_proucts(store_id)
 
-	end
 end
 
