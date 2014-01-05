@@ -6,25 +6,22 @@ class ProductGroup < ActiveRecord::Base
 		# Levenshtein.distance("112222", "11111")
 		# Jaccard.coefficient(a, b)
 
-		d_min = 1
+		d_max = 0
 		id_array = []
 
 		self.all.each do |pg|
-			d = 1 - Jaccard.coefficient(pg.name.chars, full_name.chars)
 
-			if d_min > d
+			al_fullname = AlgorithmString.new(full_name.downcase)
+			
+			d = al_fullname.longest_common_substring(pg.name.downcase).length
+
+			if d_max < d
 				id_array = [] 
-				d_min = d
+				d_max = d
 			end
 
-			if d_min == d
-				id_array.push(pg.id) 
-				
-				puts id_array
-				puts d_min
-			end
-			
-			
+			id_array.push(pg.id) if d_max == d && d_max > 0
+
 		end
 
 		where("id IN (?)", id_array)
