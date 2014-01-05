@@ -9,4 +9,5 @@ class ProductsController < ApplicationController
   	ProductWorker.perform_async
 		redirect_to products_path
   end
+
 end

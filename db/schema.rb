@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131129121505) do
+ActiveRecord::Schema.define(version: 20140104194449) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -112,7 +112,7 @@ ActiveRecord::Schema.define(version: 20131129121505) do
   add_index "product_groups", ["name", "category", "type_id"], name: "index_product_groups_on_name_and_category_and_type_id", unique: true, using: :btree
 
   create_table "product_prices", force: true do |t|
-    t.integer  "product_id"
+    t.integer  "ds_product_id"
     t.integer  "drugstore_id"
     t.integer  "external_id"
     t.float    "price"
@@ -121,13 +121,13 @@ ActiveRecord::Schema.define(version: 20131129121505) do
     t.string   "ean"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "delete_flag",  default: false
+    t.boolean  "delete_flag",   default: false
   end
 
+  add_index "product_prices", ["ds_product_id", "drugstore_id"], name: "index_product_prices_on_ds_product_id_and_drugstore_id", unique: true, using: :btree
   add_index "product_prices", ["ean"], name: "index_product_prices_on_ean", using: :btree
   add_index "product_prices", ["external_id"], name: "index_product_prices_on_external_id", using: :btree
   add_index "product_prices", ["full_name"], name: "index_product_prices_on_full_name", using: :btree
-  add_index "product_prices", ["product_id", "drugstore_id"], name: "index_product_prices_on_product_id_and_drugstore_id", unique: true, using: :btree
 
   create_table "products", force: true do |t|
     t.integer  "rls_code"
@@ -167,5 +167,13 @@ ActiveRecord::Schema.define(version: 20131129121505) do
   end
 
   add_index "rls_products", ["code"], name: "index_rls_products_on_code", unique: true, using: :btree
+
+  create_table "scores", force: true do |t|
+    t.integer  "product_id"
+    t.integer  "ds_product_id"
+    t.float    "score"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
 end

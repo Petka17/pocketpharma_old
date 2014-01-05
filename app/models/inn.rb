@@ -1,3 +1,3 @@
 class Inn < ActiveRecord::Base
-	has_many :product
+	has_many :products
 end

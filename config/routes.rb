@@ -16,12 +16,19 @@ Pocketpharma::Application.routes.draw do
 	end
 
 	resources :ds_product do
-		collection { post :update_db }
+		collection do
+			post :update_db
+			post :get_product_group_list
+		end
 	end
 
 	resources :products do
 		collection { post :update_db }
 	end
+
+	resources :product_groups
+
+	resources :inns
 
 	mount Sidekiq::Web, at: '/sidekiq'
 	

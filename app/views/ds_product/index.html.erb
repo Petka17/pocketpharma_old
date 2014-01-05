@@ -1,6 +1,5 @@
 <div class="row">
 	<div class="col-md-6">
-
 		<h1>Ассортимент аптек</h1>
 	</div>
 	<div class="col-md-6">
@@ -26,7 +25,7 @@
 			<tr>
 				<td><%= dsp.id %></td>
 				<td><%= dsp.external_id %></td>
-				<td><%= dsp.full_name %></td>
+				<td><%= link_to dsp.full_name, dsp %></td>
 				<td><%= dsp.product_price.count %></td>
 			</tr>
 		<% end %>

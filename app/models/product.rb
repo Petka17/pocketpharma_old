@@ -15,6 +15,7 @@ class Product < ActiveRecord::Base
 			p.ean = rls.ean
 			
 			t = GroupType.where(name: rls.product_type).first_or_create unless rls.product_type.empty?
+			
 			if t.nil?
 				t_id = nil
 			else
