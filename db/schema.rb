@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140104194449) do
+ActiveRecord::Schema.define(version: 20140118193126) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,33 +41,34 @@ ActiveRecord::Schema.define(version: 20140104194449) do
 
   add_index "doses", ["name"], name: "index_doses_on_name", unique: true, using: :btree
 
-  create_table "drug_stores", force: true do |t|
+  create_table "drugstores", force: true do |t|
     t.integer  "external_id"
     t.string   "name"
     t.string   "address"
     t.string   "working_hours"
-    t.string   "sec_code"
-    t.datetime "created_at"
-    t.datetime "updated_at"
     t.string   "phone"
     t.datetime "data_last_update"
+    t.integer  "product_num"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
-  add_index "drug_stores", ["external_id"], name: "index_drug_stores_on_external_id", using: :btree
+  add_index "drugstores", ["external_id"], name: "index_drugstores_on_external_id", using: :btree
 
   create_table "ds_products", force: true do |t|
     t.integer  "external_id"
+    t.integer  "product_id"
     t.string   "full_name"
-    t.integer  "rls_code"
-    t.float    "ave_price"
-    t.string   "ean"
+    t.float    "max_price"
+    t.float    "min_price"
+    t.float    "avg_price"
+    t.integer  "drugstore_count"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "ds_products", ["ean"], name: "index_ds_products_on_ean", using: :btree
   add_index "ds_products", ["external_id"], name: "index_ds_products_on_external_id", using: :btree
-  add_index "ds_products", ["rls_code"], name: "index_ds_products_on_rls_code", using: :btree
+  add_index "ds_products", ["product_id"], name: "index_ds_products_on_product_id", using: :btree
 
   create_table "forms", force: true do |t|
     t.string   "name"
@@ -115,19 +116,12 @@ ActiveRecord::Schema.define(version: 20140104194449) do
     t.integer  "ds_product_id"
     t.integer  "drugstore_id"
     t.integer  "external_id"
+    t.text     "full_name"
     t.float    "price"
     t.integer  "amount"
-    t.text     "full_name"
-    t.string   "ean"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "delete_flag",   default: false
   end
-
-  add_index "product_prices", ["ds_product_id", "drugstore_id"], name: "index_product_prices_on_ds_product_id_and_drugstore_id", unique: true, using: :btree
-  add_index "product_prices", ["ean"], name: "index_product_prices_on_ean", using: :btree
-  add_index "product_prices", ["external_id"], name: "index_product_prices_on_external_id", using: :btree
-  add_index "product_prices", ["full_name"], name: "index_product_prices_on_full_name", using: :btree
 
   create_table "products", force: true do |t|
     t.integer  "rls_code"
@@ -137,7 +131,7 @@ ActiveRecord::Schema.define(version: 20140104194449) do
     t.integer  "dose_id"
     t.integer  "pack_id"
     t.integer  "company_id"
-    t.string   "ean"
+    t.integer  "ean",              limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -149,19 +143,20 @@ ActiveRecord::Schema.define(version: 20140104194449) do
   add_index "products", ["inn_id"], name: "index_products_on_inn_id", using: :btree
   add_index "products", ["pack_id"], name: "index_products_on_pack_id", using: :btree
   add_index "products", ["product_group_id"], name: "index_products_on_product_group_id", using: :btree
+  add_index "products", ["rls_code"], name: "index_products_on_rls_code", using: :btree
 
   create_table "rls_products", force: true do |t|
     t.integer  "code"
     t.text     "name"
     t.string   "category"
-    t.text     "product_type"
+    t.text     "product_group_type"
     t.string   "product_form"
     t.string   "dose"
     t.string   "pack"
     t.string   "company"
     t.string   "country"
     t.text     "inn"
-    t.string   "ean"
+    t.integer  "ean",                limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -171,9 +166,22 @@ ActiveRecord::Schema.define(version: 20140104194449) do
   create_table "scores", force: true do |t|
     t.integer  "product_id"
     t.integer  "ds_product_id"
-    t.float    "score"
+    t.float    "form_score"
+    t.float    "dose_score"
+    t.float    "pack_score"
+    t.float    "country_score"
+    t.float    "company_score"
+    t.float    "full_score"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "scores", ["company_score"], name: "index_scores_on_company_score", using: :btree
+  add_index "scores", ["country_score"], name: "index_scores_on_country_score", using: :btree
+  add_index "scores", ["dose_score"], name: "index_scores_on_dose_score", using: :btree
+  add_index "scores", ["form_score"], name: "index_scores_on_form_score", using: :btree
+  add_index "scores", ["full_score"], name: "index_scores_on_full_score", using: :btree
+  add_index "scores", ["pack_score"], name: "index_scores_on_pack_score", using: :btree
+  add_index "scores", ["product_id", "ds_product_id"], name: "index_scores_on_product_id_and_ds_product_id", unique: true, using: :btree
 
 end

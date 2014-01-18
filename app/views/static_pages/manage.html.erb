@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="col-md-6">
+
+		<div class="row">
+			<h3>Загрузка данных из РЛС</h3>
+			<%= form_tag rls_import_path, multipart: true, class: "form-inline center-block" do %>
+				<div class="form-group">
+					<%= file_field_tag :file %>
+				</div>
+				<div class="form-group">
+			  	<%= submit_tag "Загрузить" %>
+			  </div>
+			<% end %>
+
+			<%= link_to "Справочник РЛС", rls_products_path %>
+		</div>
+
+		<div class="row">
+			<h3>Нормализация базы РЛС</h3>
+			<%= form_tag rls_normalize_path, class: "form-inline" do %>
+			  <%= submit_tag "Выполнить" %>
+			<% end %>
+
+			<%= link_to "Эталонная база данных продуктов", products_path %>
+		</div>
+
+		<div class="row">
+			<h3>Загрузка данных из аптек</h3>
+			<%= form_tag medlux_import_path, class: "form-inline center-block" do %> 
+				
+				<%= label_tag :from, "С" %>
+				<%= number_field_tag :from %> 
+				
+				<%= label_tag :to, "По" %>
+				<%= number_field_tag :to %>
+
+				<%= check_box_tag :db, 'yes', true %>
+				<%= label_tag :db, "БД" %>
+
+				<%= submit_tag "Загрузить" %>
+			<% end %>
+
+			<%= link_to "Спискок аптек", drugstores_path %>
+		</div>
+
+		<div class="row">
+			<h3>Обновление аптечного ассортимента</h3>
+			<%= form_tag dsp_update_path, class: "form-inline" do %>
+			  <%= submit_tag "Выполнить" %>
+			<% end %>
+
+			<%= link_to "Список товаров аптечного ассортимента", ds_products_path %>
+		</div>
+
+		<div class="row">
+			<h3>Запуск сопоставления</h3>
+			<%= form_tag '#', class: "form-inline" do %>
+			  <%= submit_tag "Выполнить" %>
+			<% end %>
+		</div>
+
+	</div>
+
+	<div class="col-md-6">
+		<%# render sidekiq_web_path %>
+	</div>
+</div>
+

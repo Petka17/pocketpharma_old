@@ -1,12 +1,7 @@
 <div class="row">
 	<div class="col-md-6">
 		<h1>Ассортимент аптек</h1>
-	</div>
-	<div class="col-md-6">
-		<span>Количество продуктов <%= @ds_products.count %></span>
-		<%= form_tag update_db_ds_product_index_path, class: "form-inline" do %>
-		  <%= submit_tag "Обновить" %>
-		<% end %>
+		<span>Количество: <%= @ds_products.count %></span>
 	</div>
 </div>
 
@@ -18,6 +13,9 @@
 			<th>Id</th>
 			<th>Внешний Id</th>
 			<th>Торговое наименование</th>
+			<th>Максимальная цена</th>
+			<th>Минимальная цена</th>
+			<th>Средняя цена</th>
 			<th>Количество аптек</th>
 		</tr>
 
@@ -25,8 +23,11 @@
 			<tr>
 				<td><%= dsp.id %></td>
 				<td><%= dsp.external_id %></td>
-				<td><%= link_to dsp.full_name, dsp %></td>
-				<td><%= dsp.product_price.count %></td>
+				<td><%= link_to dsp.full_name, edit_ds_product_path(dsp) %></td>
+				<td><%= dsp.max_price %></td>
+				<td><%= dsp.min_price %></td>
+				<td><%= dsp.avg_price %></td>				
+				<td><%= dsp.drugstore_count %></td>
 			</tr>
 		<% end %>
 	</table>

@@ -1,22 +1,7 @@
 <div class="row">
 	<div class="col-md-6">
 		<h1>Список продуктов из РЛС</h1>
-		<span>Количество продуктов <%= @rls_products.count %></span>
-	</div>
-	<div class="col-md-4">
-		<%= form_tag import_rls_products_path, multipart: true, class: "form-inline center-block" do %>
-			<div class="form-group">
-				<%= file_field_tag :file %>
-			</div>
-			<div class="form-group">
-		  	<%= submit_tag "Import" %>
-		  </div>
-		<% end %>
-	</div>
-	<div class="col-md-2">
-		<%= form_tag clear_db_rls_products_path, class: "form-inline" do %>
-		  <%= submit_tag "Отчистить" %>
-		<% end %>
+		<span>Количество: <%= @rls_products.count %></span>
 	</div>
 </div>
 	
@@ -43,7 +28,7 @@
 				<td><%= product.code %></td>
 				<td><%= product.name %></td>
 				<td><%= product.category %></td>
-				<td><%= product.product_type %></td>
+				<td><%= product.product_group_type %></td>
 				<td><%= product.product_form %></td>
 				<td><%= product.dose %></td>
 				<td><%= product.pack %></td>
