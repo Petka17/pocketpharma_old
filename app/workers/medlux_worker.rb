@@ -74,7 +74,7 @@ class MedluxWorker
 
 		end
 
-		drugstore.product_num = drugstore.product_price.count
+		drugstore.product_num = drugstore.product_prices.count
 		drugstore.save
 		
 	end
