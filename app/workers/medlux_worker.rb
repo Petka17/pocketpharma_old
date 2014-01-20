@@ -53,7 +53,7 @@ class MedluxWorker
 				amount 			= row[row.size-1].content.gsub(/[уп.]/, '')
 		
 				if db.nil?
-					product_price = drugstore.product_price.where(external_id: external_id).first_or_initialize
+					product_price = drugstore.product_prices.where(external_id: external_id).first_or_initialize
 
 					product_price.external_id = external_id
 					product_price.full_name 	= full_name
