@@ -40,12 +40,21 @@
 				<%= submit_tag "Загрузить" %>
 			<% end %>
 
-			<%= link_to "Спискок аптек", drugstores_path %>
+			<%= link_to "Список аптек", drugstores_path %>
 		</div>
 
 		<div class="row">
 			<h3>Обновление аптечного ассортимента</h3>
 			<%= form_tag dsp_update_path, class: "form-inline" do %>
+				<%= check_box_tag :new, 'yes', true %> 
+				<%= label_tag :new, "Поиск новых продуктов" %>
+				<br>
+				<%= check_box_tag :rel, 'yes', true %>
+				<%= label_tag :rel, "Обновление связей" %>
+				<br>
+				<%= check_box_tag :avg, 'yes', true %>
+				<%= label_tag :avg, "Обновление средней цены" %>
+				<br>
 			  <%= submit_tag "Выполнить" %>
 			<% end %>
 
@@ -54,7 +63,7 @@
 
 		<div class="row">
 			<h3>Запуск сопоставления</h3>
-			<%= form_tag '#', class: "form-inline" do %>
+			<%= form_tag fill_score_path, class: "form-inline" do %>
 			  <%= submit_tag "Выполнить" %>
 			<% end %>
 		</div>

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140118193126) do
+ActiveRecord::Schema.define(version: 20140119215914) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,16 +21,20 @@ ActiveRecord::Schema.define(version: 20140118193126) do
     t.integer  "country_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "alias"
   end
 
+  add_index "companies", ["alias"], name: "index_companies_on_alias", using: :btree
   add_index "companies", ["name", "country_id"], name: "index_companies_on_name_and_country_id", unique: true, using: :btree
 
   create_table "countries", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "alias"
   end
 
+  add_index "countries", ["alias"], name: "index_countries_on_alias", using: :btree
   add_index "countries", ["name"], name: "index_countries_on_name", unique: true, using: :btree
 
   create_table "doses", force: true do |t|
@@ -82,16 +86,20 @@ ActiveRecord::Schema.define(version: 20140118193126) do
     t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "alias"
   end
 
+  add_index "group_types", ["alias"], name: "index_group_types_on_alias", using: :btree
   add_index "group_types", ["name"], name: "index_group_types_on_name", unique: true, using: :btree
 
   create_table "inns", force: true do |t|
     t.text     "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "alias"
   end
 
+  add_index "inns", ["alias"], name: "index_inns_on_alias", using: :btree
   add_index "inns", ["name"], name: "index_inns_on_name", unique: true, using: :btree
 
   create_table "packs", force: true do |t|
@@ -108,8 +116,10 @@ ActiveRecord::Schema.define(version: 20140118193126) do
     t.integer  "type_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "alias"
   end
 
+  add_index "product_groups", ["alias"], name: "index_product_groups_on_alias", using: :btree
   add_index "product_groups", ["name", "category", "type_id"], name: "index_product_groups_on_name_and_category_and_type_id", unique: true, using: :btree
 
   create_table "product_prices", force: true do |t|

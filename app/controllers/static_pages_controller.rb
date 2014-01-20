@@ -23,10 +23,15 @@ class StaticPagesController < ApplicationController
 	end
 
 	def dsp_update
-		DsProductWorker.perform_async
-		redirect_to manage_path		
+		DsProductWorker.perform_async(params[:new], params[:rel], params[:avg])
+		redirect_to manage_path
 	end
 	
+	def fill_score
+		ComparisionWorker.perform_async
+		redirect_to manage_path
+	end
+
 	private
 	  def import_rls_product(path)
 		  spreadsheet = Roo::Excel.new(path, nil, :ignore)

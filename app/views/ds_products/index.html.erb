@@ -3,6 +3,13 @@
 		<h1>Ассортимент аптек</h1>
 		<span>Количество: <%= @ds_products.count %></span>
 	</div>
+	<div class="col-md-6">
+		<%= form_tag ds_products_path, method: :get do %>
+			<%= label_tag :search, 'Запрос:' %>
+			<%= text_field_tag :search %>
+			<%= submit_tag 'Выполнить' %>
+		<% end %>
+	</div>
 </div>
 
 <%= will_paginate @ds_products %>
@@ -13,21 +20,21 @@
 			<th>Id</th>
 			<th>Внешний Id</th>
 			<th>Торговое наименование</th>
-			<th>Максимальная цена</th>
-			<th>Минимальная цена</th>
-			<th>Средняя цена</th>
-			<th>Количество аптек</th>
+			<th><%= sortable 'max_price', 'Максимальная цена' %></th>
+			<th><%= sortable 'min_price', 'Минимальная цена' %></th>
+			<th><%= sortable 'avg_price', 'Средняя цена' %></th>
+			<th><%= sortable 'drugstore_count', 'Количество аптек' %></th>
 		</tr>
 
 		<% @ds_products.each do |dsp| %>
 			<tr>
 				<td><%= dsp.id %></td>
 				<td><%= dsp.external_id %></td>
-				<td><%= link_to dsp.full_name, edit_ds_product_path(dsp) %></td>
-				<td><%= dsp.max_price %></td>
-				<td><%= dsp.min_price %></td>
-				<td><%= dsp.avg_price %></td>				
-				<td><%= dsp.drugstore_count %></td>
+				<td><%= link_to dsp.full_name, dsp %></td>
+				<td align="right"><%= number_to_currency(dsp.max_price, unit: "") %></td>
+				<td align="right"><%= number_to_currency(dsp.min_price, unit: "") %></td>
+				<td align="right"><%= number_to_currency(dsp.avg_price, unit: "") %></td>	
+				<td align="right"><%= dsp.drugstore_count %></td>
 			</tr>
 		<% end %>
 	</table>

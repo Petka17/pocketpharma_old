@@ -3,6 +3,13 @@
 		<h1>Список групп</h1>
 		<span>Количество: <%= @product_groups.count %></span>
 	</div>
+	<div class="col-md-6">
+		<%= form_tag product_groups_path, method: :get do %>
+			<%= label_tag :search, 'Запрос:' %>
+			<%= text_field_tag :search %>
+			<%= submit_tag 'Выполнить' %>
+		<% end %>
+	</div>
 </div>
 
 <%= will_paginate @product_groups %>
@@ -11,6 +18,7 @@
 	<table class="table table-condensed table-hover">
 		<tr>
 			<th>Название</th>
+			<th>Альтенативное название</th>
 			<th>Категория</th>
 			<th>Тип</th>
 			<th>Количество продуктов</th>
@@ -19,6 +27,7 @@
 		<% @product_groups.each do |pg| %>
 			<tr>
 				<td><%= link_to pg.name, pg %></td>			
+				<td><%= pg.alias %></td>
 				<td><%= pg.category %></td>			
 				<td><%= pg.group_type.name unless pg.group_type.nil?%></td>					
 				<td><%= pg.products.count %></td>

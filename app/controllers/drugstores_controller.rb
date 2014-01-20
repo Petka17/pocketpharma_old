@@ -6,7 +6,7 @@ class DrugstoresController < ApplicationController
 
   def show
 		@drugstore = Drugstore.find(params[:id])
-		@products = @drugstore.product_price.paginate(page: params[:page])
+		@products = @drugstore.product_prices.paginate(page: params[:page])
   end
   
 end

@@ -10,7 +10,6 @@ gem 'faker', '1.1.2'
 
 # Pagination
 gem 'will_paginate', '3.0.4'
-#gem 'bootstrap-will_paginate', '0.0.9'
 gem 'will_paginate-bootstrap'
 
 # XLS import
@@ -44,6 +43,7 @@ gem 'coffee-rails', '4.0.0'
 gem 'uglifier', '2.1.1'
 gem 'jquery-rails', '3.0.4'
 gem 'turbolinks', '1.1.1'
+gem 'jquery-turbolinks'
 gem 'jbuilder', '1.0.2'
 
 group :development, :test do

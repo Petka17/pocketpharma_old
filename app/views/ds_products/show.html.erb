@@ -1,0 +1,61 @@
+<div class="row">
+	<div class="col-md-6">
+		<%= link_to "<-- Назад", ds_products_path %>
+		<h1><%= @ds_product.full_name %></h1>
+	</div>
+	<div class="col-md-6">
+		<%= form_tag @ds_product, method: :get do %>
+			<%= label_tag :search, 'Запрос:' %>
+			<%= text_field_tag :search %>
+			<%= submit_tag 'Выполнить' %>
+		<% end %>
+		<br>
+		<%= form_tag @ds_product, method: :get do %>
+			<%= hidden_field_tag :product_id %>
+			<%= submit_tag 'Связать' %>
+		<% end %>
+		<br>
+		<h4><%= @ds_product.product_id %></h4>
+	</div>
+</div>
+
+<% if @scores %>
+
+<div class="table-responsive">
+	<table class="table table-condensed table-hover">
+		<tr>
+			<th>Флаг</th>
+			<th>Код РЛС</th>
+			<th>Название группы</th>
+			<th>Категория</th>
+			<th>Тип</th>
+			<th>Форма</th>
+			<th>Дозировка</th>
+			<th>Фасовка</th>
+			<th>Производитель</th>
+			<th>Страна</th>
+			<th>МНН</th>
+			<th>Штрих-код</th>
+		</tr>
+		
+		<% @scores.each do |s| %>
+			<tr>
+				<td><input type="radio" name="prod_select" id="<%= s.product.id %>"></td>
+				<td><%= s.product.rls_code %></td>				
+				<td><%= s.product.product_group.name unless s.product.product_group.nil? %></td>
+				<td><%= s.product.product_group.category unless s.product.product_group.nil? %></td>
+				<td><%= s.product.product_group.group_type.name unless s.product.product_group.nil? || s.product.product_group.group_type.nil? %></td>
+				<td><%= s.product.form.name unless s.product.form.nil? %></td>
+				<td><%= s.product.dose.name unless s.product.dose.nil? %></td>
+				<td><%= s.product.pack.name unless s.product.pack.nil? %></td>
+				<td><%= s.product.company.name unless s.product.company.nil? %></td>
+				<td><%= s.product.company.country.name unless s.product.company.nil? || s.product.company.country.nil? %></td>
+				<td><%= s.product.inn.name unless s.product.inn.nil? %></td>
+				<td><%= s.product.ean %></td>
+			</tr>
+		<% end %>
+
+	</table>
+</div>
+	
+<% end %>

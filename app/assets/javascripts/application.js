@@ -11,7 +11,13 @@
 // about supported directives.
 //
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
+
+
+$(document).on('click', 'input', function() {
+	$('input#product_id').attr('Value', $(this).attr('id'));
+})
