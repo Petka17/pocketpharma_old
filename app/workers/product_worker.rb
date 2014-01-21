@@ -9,8 +9,8 @@ class ProductWorker
 
 			p = Product.where(rls_code: rls.code).first_or_initialize
 			
-			puts "РЛС: #{rls.ean}"
-			
+			puts "РЛС: #{rls.code}"
+
 			p.ean = rls.ean
 			
 			t = GroupType.where(name: rls.product_group_type).first_or_create unless rls.product_group_type.empty?
