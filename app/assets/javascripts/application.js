@@ -16,8 +16,3 @@
 //= require turbolinks
 //= require bootstrap
 //= require_tree .
-
-
-$(document).on('click', 'input', function() {
-	$('input#product_id').attr('Value', $(this).attr('id'));
-})
