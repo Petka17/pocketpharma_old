@@ -19,6 +19,7 @@
 		<tr>
 			<th>Id</th>
 			<th>Внешний Id</th>
+			<th>Группа</th>
 			<th>Торговое наименование</th>
 			<th><%= sortable 'max_price', 'Максимальная цена' %></th>
 			<th><%= sortable 'min_price', 'Минимальная цена' %></th>
@@ -30,7 +31,12 @@
 			<tr>
 				<td><%= dsp.id %></td>
 				<td><%= dsp.external_id %></td>
-				<td><%= link_to dsp.full_name, dsp %></td>
+				<td><%= dsp.name %></td>				
+				<td>
+					<%= link_to dsp.full_name, dsp %>
+					<br>
+					<%= dsp.product.full_name unless dsp.product.nil? %>
+				</td>
 				<td align="right"><%= number_to_currency(dsp.max_price, unit: "") %></td>
 				<td align="right"><%= number_to_currency(dsp.min_price, unit: "") %></td>
 				<td align="right"><%= number_to_currency(dsp.avg_price, unit: "") %></td>	
@@ -39,3 +45,5 @@
 		<% end %>
 	</table>
 </div>
+
+<%= will_paginate @ds_products %>

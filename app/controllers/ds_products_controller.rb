@@ -9,7 +9,7 @@ class DsProductsController < ApplicationController
 	def show
 		@ds_product = DsProduct.find(params[:id])
 		update_score_table unless search_pg_str.nil?
-		@ds_product.product_id = params[:product_id]
+		@ds_product.update_attribute(:product_id, params[:product_id])
 	 	@scores = @ds_product.scores
 	end
 
