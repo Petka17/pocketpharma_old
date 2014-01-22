@@ -27,31 +27,70 @@
 			<th>Флаг</th>
 			<th>Код РЛС</th>
 			<th>Название группы</th>
+			<th>Страна</th>
+			<th>Производитель</th>
+			<th>Параметры</th>
 			<th>Категория</th>
 			<th>Тип</th>
-			<th>Форма</th>
-			<th>Дозировка</th>
-			<th>Фасовка</th>
-			<th>Производитель</th>
-			<th>Страна</th>
 			<th>МНН</th>
 			<th>Штрих-код</th>
 		</tr>
-		
+			<tr>
+				<td></td>
+				<td></td>				
+				<td>
+					<span class="emphasize">
+						<%= @ds_product.name %>
+					</span>
+				</td>
+				<td>
+					<span class="emphasize">
+						<%= @ds_product.country_code %>
+					</span>
+				</td>
+				<td>
+					<span class="emphasize">
+						<%= @ds_product.company %>
+					</span>
+				</td>
+				<td>
+					<span class="emphasize">
+						<%= @ds_product.pack_param %>
+					</span>
+				</td>
+				<td></td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
 		<% @scores.each do |s| %>
+			<% p = s.product %>
 			<tr>
 				<td><input type="radio" name="prod_select" id="<%= s.product.id %>"></td>
-				<td><%= s.product.rls_code %></td>				
-				<td><%= s.product.product_group.name unless s.product.product_group.nil? %></td>
-				<td><%= s.product.product_group.category unless s.product.product_group.nil? %></td>
-				<td><%= s.product.product_group.group_type.name unless s.product.product_group.nil? || s.product.product_group.group_type.nil? %></td>
-				<td><%= s.product.form.name unless s.product.form.nil? %></td>
-				<td><%= s.product.dose.name unless s.product.dose.nil? %></td>
-				<td><%= s.product.pack.name unless s.product.pack.nil? %></td>
-				<td><%= s.product.company.name unless s.product.company.nil? %></td>
-				<td><%= s.product.company.country.name unless s.product.company.nil? || s.product.company.country.nil? %></td>
-				<td><%= s.product.inn.name unless s.product.inn.nil? %></td>
-				<td><%= s.product.ean %></td>
+				<td><%= p.rls_code %></td>				
+				<td><%= p.product_group_name %></td>
+				<td>
+					<%= p.country_name %>
+					<span class="emphasize">
+						<%= number_to_percentage s.country_score %>
+					</span>
+				</td>
+				<td>
+					<%= p.company_name %>
+					<span class="emphasize">
+						<%= number_to_percentage s.company_score %>
+					</span>
+				</td>
+				<td>
+					<%= p.pack_param %>
+					<span class="emphasize">
+						<%= number_to_percentage s.pack_score %>
+					</span>
+				</td>
+				<td><%= p.product_group_category %></td>
+				<td><%= p.product_group_type %></td>
+				<td><%= p.inn_name %></td>
+				<td><%= p.ean %></td>
 			</tr>
 		<% end %>
 

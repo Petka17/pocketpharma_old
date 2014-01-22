@@ -20,6 +20,9 @@
 			<th>Id</th>
 			<th>Внешний Id</th>
 			<th>Группа</th>
+			<th>Страна</th>
+			<th>Компания</th>
+			<th>Параметры</th>
 			<th>Торговое наименование</th>
 			<th><%= sortable 'max_price', 'Максимальная цена' %></th>
 			<th><%= sortable 'min_price', 'Минимальная цена' %></th>
@@ -31,11 +34,36 @@
 			<tr>
 				<td><%= dsp.id %></td>
 				<td><%= dsp.external_id %></td>
-				<td><%= dsp.name %></td>				
+				<td>
+					<%= dsp.name %>
+					<span class='emphasize'>
+						<%= dsp.product.product_group_name unless dsp.product.nil? %>
+					</span>
+				</td>
+				<td>
+					<%= dsp.country_code %>
+					<span class='emphasize'>
+						<%= dsp.product.country_name unless dsp.product.nil? %>
+					</span>
+				</td>	
+				<td>
+					<%= dsp.company %>
+					<span class='emphasize'>
+						<%= dsp.product.company_name unless dsp.product.nil? %>
+					</span>
+				</td>
+				<td>
+					<%= dsp.pack_param %>
+					<span class='emphasize'>
+						<%= dsp.product.pack_param unless dsp.product.nil? %>
+					</span>
+				</td>		
 				<td>
 					<%= link_to dsp.full_name, dsp %>
-					<br>
-					<%= dsp.product.full_name unless dsp.product.nil? %>
+					<span class='emphasize'>
+						<%= dsp.product.full_name unless dsp.product.nil? %>
+						<%= '(' + dsp.product.ean.to_s + ')' unless dsp.product.nil? %>
+					</span>
 				</td>
 				<td align="right"><%= number_to_currency(dsp.max_price, unit: "") %></td>
 				<td align="right"><%= number_to_currency(dsp.min_price, unit: "") %></td>
