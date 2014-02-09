@@ -1,0 +1,3 @@
+$("form#form_" + <%= @ds_product.id %> + " input.btn")
+	.attr("value", "<%= button_text(@ds_product.approved_flg)[0] %>")
+	.attr("class","btn btn-large btn-<%= button_text(@ds_product.approved_flg)[1] %>");

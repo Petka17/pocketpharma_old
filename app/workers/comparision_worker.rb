@@ -3,51 +3,46 @@ class ComparisionWorker
 	include Sidekiq::Worker
 	sidekiq_options retry: false
 
-	def perform
-		# DsProduct.all.each 
+	def perform(count)
+		i = 1
 
-		DsProduct.all.order('drugstore_count DESC').limit(30).each do |dsp|
-			dsp.scores.delete_all
-			get_similar_products(dsp.full_name, dsp.id)
-		end
+		DsProduct.where('product_id is null').order("drugstore_count desc").limit(count).each do |dsp|
 
-	end
-
-	def get_similar_products(full_name, dsp_id)
-
-		puts "#{DateTime.now}	Drugstore product name: #{full_name}"
-
-		d_max = 0
-		id_array = []
-
-		ProductGroup.all.each do |pg|
-
-			al_fullname = AlgorithmString.new(full_name.downcase)
+			puts "#{DateTime.now} Лекарство #{dsp.id}: #{dsp.full_name}"
+			puts "Имя группы: #{dsp.name}"
+			puts "Количество аптек: #{dsp.drugstore_count}"
 			
-			name = pg.alias.nil? ? pg.name : pg.alias
+			dsp.scores.delete_all
 
-			d = al_fullname.longest_common_substring(name.downcase).length
+			pgs = ProductGroup.where("lower(name) LIKE '#{dsp.name.downcase}%'")
 
-			if d_max < d
-				id_array = [] 
-				d_max = d
+			puts "Количество продуктов из эталонной базы: #{pgs.count}"
+
+			if pgs.count < 30
+				pgs.each do |pg|
+					pg.products.each do |p|
+						s = dsp.scores.build(
+							product_id: p.id,
+							pack_score: 100 * Jaccard.coefficient(dsp.pack_param.chars, p.pack_param.to_s.chars),
+							country_score: 100 * Jaccard.coefficient(dsp.country_code.chars, p.country_name.to_s.chars),
+							company_score: 100 * Jaccard.coefficient(dsp.company.chars, p.company_name.to_s.chars)
+						)
+						s.save
+					end
+				end
+			end
+ 			
+ 			if dsp.scores.count > 0
+				product_id = dsp.scores.order('country_score desc, company_score desc, pack_score desc').first.product_id
+				puts "Номер продукта: #{product_id}"
+				dsp.update_attribute(:product_id, product_id)
 			end
 
-			id_array.push(pg.id) if d_max == d && d_max > 0
+			puts "Обработан продукт с номером: #{i}"
+
+			i += 1
 
 		end
-
-		puts "#{DateTime.now}	Ids Array: #{id_array}"
-
-		ProductGroup.where("id IN (?)", id_array).each do |pg|
-			pg.products.each do |p|
-				s = Score.new
-				s.product_id = p.id
-				s.ds_product_id = dsp_id
-				s.save				
-			end
-
-		end
-
 	end
+
 end

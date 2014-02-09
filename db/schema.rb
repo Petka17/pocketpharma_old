@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140119215914) do
+ActiveRecord::Schema.define(version: 20140123142428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,11 @@ ActiveRecord::Schema.define(version: 20140119215914) do
     t.integer  "drugstore_count"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "approved_flg",    default: false
+    t.string   "name"
+    t.string   "company"
+    t.string   "country_code"
+    t.string   "pack_param"
   end
 
   add_index "ds_products", ["external_id"], name: "index_ds_products_on_external_id", using: :btree

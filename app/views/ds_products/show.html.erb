@@ -1,6 +1,5 @@
 <div class="row">
 	<div class="col-md-6">
-		<%= link_to "<-- Назад", ds_products_path %>
 		<h1><%= @ds_product.full_name %></h1>
 	</div>
 	<div class="col-md-6">
@@ -10,9 +9,9 @@
 			<%= submit_tag 'Выполнить' %>
 		<% end %>
 		<br>
-		<%= form_tag @ds_product, method: :get do %>
-			<%= hidden_field_tag :product_id %>
-			<%= submit_tag 'Связать' %>
+		<%= form_for(@ds_product, url: update_product_id_ds_product_path(@ds_product), method: :post, remote: true) do |f| %>
+			<%= f.hidden_field :product_id %>
+			<%= f.submit 'Связать' %>
 		<% end %>
 		<br>
 		<h4><%= @ds_product.product_id %></h4>

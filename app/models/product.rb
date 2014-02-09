@@ -5,7 +5,10 @@ class Product < ActiveRecord::Base
 	belongs_to :dose
 	belongs_to :pack
 	belongs_to :inn
-	belongs_to :company, -> { includes :country }
+	belongs_to :company
+	belongs_to :rls_product, class_name: "RlsProduct", 
+													 foreign_key: "rls_code",
+													 primary_key: "code"
 
 	attr_reader :full_name, 
 							:pack_param, 
@@ -21,21 +24,29 @@ class Product < ActiveRecord::Base
 		str += ' ' + form.name unless form.nil?
 		str += ' ' + dose.name unless dose.nil?
 		str += ' ' + pack.name unless pack.nil?
-		str += ' ' + country_name
-		str += ' ' + company_name
+		# str += ' ' + country_name
+		# str += ' ' + company.country.name unless company.nil? || company.country.nil?
+		# str += ' ' + company_name
 	end
 
 	def pack_param
-		str = ""
-		str += form.name + ' ' unless form.nil?
-		str += dose.name + ' ' unless dose.nil?
-		str += pack.name + ' ' unless pack.nil?
-		str.strip!
-		str
+		form_name + ' ' + dose_name + ' ' + pack_name
+	end
+
+	def form_name
+		form.nil? ? "" : form.name
+	end
+
+	def dose_name
+		dose.nil? ? "" : dose.name
+	end
+
+	def pack_name
+		pack.nil? ? "" : pack.name
 	end
 
 	def country_name
-		company.country.name unless company.country.nil?
+		company.country.name unless company.nil? || company.country.nil?
 	end
 
 	def company_name

@@ -19,7 +19,11 @@ Pocketpharma::Application.routes.draw do
 	resources :inns
 
 	resources :drugstores
-	resources :ds_products
+	resources :ds_products do
+    member do
+      post 'accept', 'update_product_id'
+    end
+  end
 
 	mount Sidekiq::Web, at: '/sidekiq'
 	

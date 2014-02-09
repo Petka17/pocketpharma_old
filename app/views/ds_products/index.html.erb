@@ -39,6 +39,12 @@
 					<span class='emphasize'>
 						<%= dsp.product.product_group_name unless dsp.product.nil? %>
 					</span>
+					<% unless dsp.product_id.nil? %>
+						<%= form_for(dsp, url: accept_ds_product_path(dsp), method: :post, html: { id: "form_#{dsp.id}" }, remote: true) do |f| %>
+							<% txt = button_text(dsp.approved_flg) %>
+							<%= f.submit "#{txt[0]}", class: "btn btn-large btn-#{txt[1]}" %>
+						<% end %>
+					<% end %>
 				</td>
 				<td>
 					<%= dsp.country_code %>
@@ -62,7 +68,7 @@
 					<%= link_to dsp.full_name, dsp %>
 					<span class='emphasize'>
 						<%= dsp.product.full_name unless dsp.product.nil? %>
-						<%= '(' + dsp.product.ean.to_s + ')' unless dsp.product.nil? %>
+						<%= '(' + dsp.product.ean.to_s + ')' unless dsp.product.nil? || dsp.product.ean.nil? %>
 					</span>
 				</td>
 				<td align="right"><%= number_to_currency(dsp.max_price, unit: "") %></td>

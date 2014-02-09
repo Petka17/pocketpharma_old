@@ -3,4 +3,4 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 
 $(document).on 'click', 'input', () ->
-	$('input#product_id').attr 'Value', $(this).attr('id')
+	$('input#ds_product_product_id').attr 'Value', $(this).attr('id')

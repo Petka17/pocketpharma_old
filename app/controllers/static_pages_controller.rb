@@ -28,7 +28,7 @@ class StaticPagesController < ApplicationController
 	end
 	
 	def fill_score
-		ComparisionWorker.perform_async
+		ComparisionWorker.perform_in(params[:delay].to_i.minute, params[:count])
 		redirect_to manage_path
 	end
 

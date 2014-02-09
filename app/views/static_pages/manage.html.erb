@@ -23,7 +23,7 @@
 
 			<%= link_to "Эталонная база данных продуктов", products_path %>
 		</div>
-
+		
 		<div class="row">
 			<h3>Загрузка данных из аптек</h3>
 			<%= form_tag medlux_import_path, class: "form-inline center-block" do %> 
@@ -64,6 +64,13 @@
 		<div class="row">
 			<h3>Запуск сопоставления</h3>
 			<%= form_tag fill_score_path, class: "form-inline" do %>
+				<%= label_tag :count, "Количество" %>
+				<%= number_field_tag :count %> 
+				
+				<%= label_tag :delay, "Через" %>
+				<%= number_field_tag :delay %>
+				<span>мин.</span>
+				<br>
 			  <%= submit_tag "Выполнить" %>
 			<% end %>
 		</div>
